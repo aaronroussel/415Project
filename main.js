@@ -51,8 +51,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get("/new", (req, res) => {});
-
 app.post("/login", async (req, res) => {
   let userData = {
     username: req.fields.userName,
