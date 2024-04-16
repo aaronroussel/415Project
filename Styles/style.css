@@ -1,0 +1,170 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url("/images/background.jpg"); /* Path to your background image */
+    background-size: cover; /* Cover the entire viewport without stretching */
+    background-position: center; /* Center the image in the viewport */
+    background-attachment: fixed; /* The image will not scroll with the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white;
+}
+
+.form-container {
+    background-color: rgba(40, 50, 55, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+    width: 300px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will distribute space between the messages and the chat-controls */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    background-color: rgba(40, 50, 55, 0.8); /* 80% opacity */
+    width: 35vw; /* Adjust the width to your preference */
+    height: 15vh; /* Adjust the height to your preference */
+    overflow: hidden;
+}
+
+h2 {
+    text-align: center;
+    color: #fff;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group textarea {
+    background-color: rgba(35, 35, 35, 0.8);
+    width: 100%;
+    padding: 10px;
+    border: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1bff00;
+    border: none;
+    border-radius: 10px; /* Rounded button */
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Button shadow */
+}
+
+button:hover {
+    background-color: #33c800;
+}
+
+/* Add this to your existing CSS file */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(40, 50, 55, 0.8);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: rgba(40, 50, 55, 0.8);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.center {
+    text-align: center;
+}
+
+.center-button {
+    text-align: center; /* Centers the content horizontally */
+    margin-top: 20px; /* Adds some space above the button */
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 15px; /* Adjust the padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff; /* Text color */
+    background-color: #007bff; /* Background color */
+    border: 1px solid #007bff; /* Border color */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+    border-color: #0056b3; /* Darker border on hover */
+}
+
+.center-message {
+    text-align: center;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+.center-div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#messages li {
+    padding: 8px;
+    margin-bottom: 2px;
+    background-color: #f3f3f3;
+}
+#message-box {
+    padding: 10px;
+    margin-top: 10px;
+}
+#send-btn {
+    padding: 10px 20px;
+}

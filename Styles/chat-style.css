@@ -1,0 +1,182 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url("/images/background.jpg");
+    /* Path to your background image */
+    background-size: cover;
+    /* Cover the entire viewport without stretching */
+    background-position: center;
+    /* Center the image in the viewport */
+    background-attachment: fixed;
+    /* The image will not scroll with the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white;
+}
+
+.container {
+    /* The container should be a flex row container now */
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    background-color: rgba(40, 50, 55, 0.4);
+    width: 80vw;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.chat-container {
+    /* This is a new flex column container for the chat messages and controls */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100% - 20vw); /* Subtract the width of the control panel */
+    height: 100%;
+}
+
+.control-panel-container {
+    /* Existing styles... */
+    width: 20vw; /* Adjust the width of the control panel if needed */
+    height: 100%;
+    overflow-y: auto;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#messages {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: rgba(40, 50, 55, 0.4);
+    border-radius: 8px 8px 0 0;
+}
+
+#messages li {
+    padding: 8px;
+    background-color: rgba(40, 50, 53, 0.2);
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    color: white;
+    border-radius: 4px;
+}
+
+#messages li:nth-child(odd) {
+    background-color: rgba(40, 50, 53, 0.2);
+}
+
+#users {
+    list-style-type: none;
+    padding: 5px;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: rgba(40, 50, 55, 0.4);
+    border-radius: 5px 5px 0 0;
+}
+
+#users li {
+    padding: 2px;
+    background-color: rgba(40, 50, 53, 0.2);
+    margin-bottom: 5px;
+    word-wrap: break-word;
+    color: white;
+    border-radius: 4px;
+}
+
+#users:hover {
+    background-color: rgba(40, 50, 55, 0.9);
+}
+
+.chat-controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgba(40, 50, 55, 0.4);
+}
+
+#message-box {
+    flex: 1;
+    /* This makes the input expand to fill the space */
+    padding: 10px;
+    margin-right: 10px;
+    background-color: rgba(256, 256, 256, 0.8);
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+
+#send-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.13s;
+}
+
+#send-btn:hover {
+    background-color: #00b35d;
+}
+
+input,
+button {
+    font-size: 16px;
+}
+
+.username {
+    color: coral;
+}
+
+#logout-container {
+    position: fixed;
+    /* Fixed position to place it relative to the viewport */
+    left: 50%;
+    /* Position at the center of the screen */
+    bottom: 20px;
+    /* Padding from the bottom */
+    transform: translateX(-50%);
+    /* Shift it back to center the button exactly */
+    width: 100%;
+    /* Full width to ensure centering works */
+    text-align: center;
+    /* Center the text (button) inside the container */
+}
+
+#logout-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.13s;
+}
+
+#logout-btn:hover {
+    background-color: #9a0300;
+}
+
+@media (max-width: 600px) {
+    #messages {
+        width: 90vw;
+    }
+
+    .chat-controls {
+        flex-direction: column;
+    }
+
+    #message-box {
+        width: 90vw;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    #send-btn {
+        width: 90vw;
+    }
+}

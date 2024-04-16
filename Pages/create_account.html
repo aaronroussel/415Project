@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/Styles/style.css" />
+        <title>Create an account</title>
+    </head>
+    <body>
+        <div class="form-container">
+            <form action="/" method="post" id="accountForm">
+                <h2>Create a new account</h2>
+                <div class="input-group">
+                    <label for="userName">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="userName"
+                        size="16"
+                        required
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        size="16"
+                        onkeyup="check();"
+                        required
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="passwordConfirm">Confirm password:</label>
+                    <input
+                        type="password"
+                        id="passwordconfirm"
+                        name="passwordConfirm"
+                        size="16"
+                        onkeyup="check();"
+                        required
+                    />
+                    <span id="message"></span>
+                </div>
+                <button type="submit" class="button">Submit</button>
+                <div class="center-button">
+                    <a href="/showcookies">show cookies</a>
+                </div>
+                <div class="center-button">
+                    <a href="/clear_cookies">clear cookies</a>
+                </div>
+            </form>
+        </div>
+        <div id="accountModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1 class="center-message">This account already exists!</h1>
+            </div>
+        </div>
+        <script src="/Scripts/create_account_event.js"></script>
+    </body>
+
+    <script>
+        var check = function () {
+            if (
+                document.getElementById("password").value ==
+                document.getElementById("passwordconfirm").value
+            ) {
+                document.getElementById("message").style.color = "green";
+                document.getElementById("message").innerHTML =
+                    "Passwords Match";
+            } else {
+                document.getElementById("message").style.color = "red";
+                document.getElementById("message").innerHTML =
+                    "Passwords Do Not Match";
+            }
+        };
+    </script>
+</html>

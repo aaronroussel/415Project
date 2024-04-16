@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/Styles/style.css" />
+    <title>Create an account</title>
+</head>
+
+<body>
+    <div class="form-container">
+        <form action="/" method="post" id="accountForm">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="userName">Username:</label>
+                <input type="text" id="username" name="userName" size="16" required />
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" size="16" required />
+            </div>
+            <button type="submit" class="button">Log In</button>
+            <!-- Create Account Button -->
+        </form>
+        <div class="center-button">
+            <button id="create_account_button" type="create_account" class="button">
+                Create Account
+            </button>
+        </div>
+        <div id="accountModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1 class="center-message">Incorrect Login Information!</h1>
+            </div>
+        </div>
+        <script src="/Scripts/login_event.js"></script>
+</body>
+
+</html>
