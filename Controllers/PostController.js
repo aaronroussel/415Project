@@ -39,23 +39,23 @@ class Post {
   }
 
   async createPost(client) {
-      const db = client.db(dbName);
-      const collection = db.collection('posts');
+    const db = client.db(dbName);
+    const collection = db.collection("posts");
 
-      try {
-          const post = {
-              this.postTitle,
-          this.postContent,
-              postAuthor: new ObjectId(postAuthorId),
-              subscribers: subscriberIds.map(id => new ObjectId(id)),
-              comments: commentIds.map(id => new ObjectId(id))
-          };
+    try {
+      const post = {
+        postTitle,
+        postContent,
+        postAuthor: new ObjectId(postAuthorId),
+        subscribers: subscriberIds.map((id) => new ObjectId(id)),
+        comments: commentIds.map((id) => new ObjectId(id)),
+      };
 
-          const result = await collection.insertOne(post);
-          console.log(`Post created with the following id: ${result.insertedId}`);
-      } catch (error) {
-          console.error('Error creating post:', error);
-      }
+      const result = await collection.insertOne(post);
+      console.log(`Post created with the following id: ${result.insertedId}`);
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   }
 
   createComment(content, author) {
