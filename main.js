@@ -51,6 +51,23 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
+app.post("/create_account", async (req, res) => {
+  console.log("Received Post Request");
+  console.log("Form Data:", req.fields);
+  const newUserData = {
+    username: req.fields.userName,
+    password: req.fields.password,
+  };
+  const newUser = new User(newUserData);
+  const created = await newUser.createAccount(client);
+  if (!created) {
+    res.send("account already exists");
+  } else {
+    console.log("Redirecting client....");
+    res.redirect("/registration-successful");
+  }
+});
+
 app.post("/login", async (req, res) => {
   let userData = {
     username: req.fields.userName,
@@ -79,3 +96,7 @@ app.post("/login", async (req, res) => {
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+// ------------------ End of Server ------------------
+
+// Start of Socket.io

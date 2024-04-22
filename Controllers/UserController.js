@@ -1,13 +1,16 @@
 const ObjectId = require("mongodb").ObjectId;
 
 class User {
+  username;
+  password;
+  userId;
+  subscribedPosts = [];
+
   constructor(userData) {
     this.username = userData.username;
     this.password = userData.password;
-    this.id = null;
-  }
-  async createAccount(client, newAccount) {
-    // db logic here
+    this.userId = userData.id;
+    this.subscribedPosts = [];
   }
 
   async login(client) {
@@ -65,7 +68,8 @@ class User {
       const collection = client.db("arousmdb").collection("Accounts");
       const account = await collection.findOne({ _id: new ObjectId(userId) });
       if (account) {
-        return account;
+        accountObject = new User(account);
+        return accountObject;
       } else {
         throw new Error("Acount not  found");
       }
@@ -78,6 +82,10 @@ class User {
   }
 
   async updateAccount(client, account) {}
+
+  notify(message) {
+    // logic here to notify the user that a new post has been made
+  }
 }
 
 module.exports = User;
