@@ -27,11 +27,6 @@ class Post {
     });
   }
 
-  createPost() {
-    console.log("Post created");
-    this.notify();
-  }
-
   updatePost(newContent) {
     this.postContent = newContent;
     console.log("Post updated");
@@ -39,22 +34,23 @@ class Post {
   }
 
   async createPost(client) {
-    const db = client.db(dbName);
-    const collection = db.collection("posts");
-
     try {
+      await client.connect();
+      const collection = client.db("arousmdb").collection("Posts");
       const post = {
-        postTitle,
-        postContent,
-        postAuthor: new ObjectId(postAuthorId),
-        subscribers: subscriberIds.map((id) => new ObjectId(id)),
-        comments: commentIds.map((id) => new ObjectId(id)),
+        postTitle: this.postTitle,
+        postContent: this.postContent,
+        postAuthor: new ObjectId(this.postAuthor),
+        subscribers: this.subscribers.map((id) => new ObjectId(id)),
+        comments: this.comments.map((id) => new ObjectId(id)),
       };
 
       const result = await collection.insertOne(post);
       console.log(`Post created with the following id: ${result.insertedId}`);
     } catch (error) {
       console.error("Error creating post:", error);
+    } finally {
+      await client.close();
     }
   }
 
@@ -64,7 +60,7 @@ class Post {
   }
 }
 
-class PostComment {
+class Comment {
   commentContent;
   commentAuthor;
 
@@ -73,7 +69,28 @@ class PostComment {
     this.commentAuthor = commentAuthor;
   }
 
-  createComment() {
-    console.log("Comment created");
+  async createComment(client) {
+    try {
+      await client.connect();
+      const collection = client.db("arousmdb").collection("Comments");
+      const comment = {
+        commentContent,
+        commentAuthor: new ObjectId(commentAuthorId),
+      };
+
+      const result = await collection.insertOne(comment);
+      console.log(
+        `Comment created with the following id: ${result.insertedId}`,
+      );
+    } catch (error) {
+      console.error("Error creating comment:", error);
+    } finally {
+      await client.close();
+    }
   }
 }
+
+module.exports = {
+  Post,
+  Comment,
+};

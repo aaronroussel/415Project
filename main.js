@@ -9,6 +9,7 @@ const client = DBconnection.getInstance().client;
 const cookieParser = require("cookie-parser");
 const server = http.createServer(app);
 const User = require("./Controllers/UserController");
+const { Post, Comment } = require("./Controllers/PostController");
 const cookieAuth = require("./Controllers/AuthController").cookieAuth;
 const cookie = require("cookie");
 
@@ -30,6 +31,15 @@ app.get("/", async (req, res) => {
 
 app.get("/create_account", (req, res) => {
   res.sendFile(path.join(__dirname, "/Pages/create_account.html"));
+});
+
+app.get("/newpost", async (req, res) => {
+  const newPost = new Post("Test", "Test", req.cookies.id);
+  try {
+    const created = await newPost.createPost(client);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/login", async (req, res) => {

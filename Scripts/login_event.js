@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modal = document.getElementById("accountModal");
   const span = document.getElementsByClassName("close")[0];
   const createAccountButton = document.getElementById("create_account_button");
+  const createPostButton = document.getElementById("create_post_button");
 
   createAccountButton.addEventListener("click", function (event) {
     event.preventDefault();

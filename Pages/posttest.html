@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/Styles/style.css" />
+        <title>Create New Post</title>
+    </head>
+    <body>
+        <div class="form-container">
+            <form id="postForm">
+                <h2>Create New Post</h2>
+                <div class="input-group">
+                    <label for="postTitle">Post Title:</label>
+                    <input
+                        type="text"
+                        id="postTitle"
+                        name="postTitle"
+                        required
+                    />
+                </div>
+                <div class="input-group">
+                    <label for="postContent">Content:</label>
+                    <textarea
+                        id="postContent"
+                        name="postContent"
+                        required
+                    ></textarea>
+                </div>
+                <button type="submit" class="button">Create Post</button>
+            </form>
+        </div>
+        <script src="/Scripts/post-event.js"></script>
+    </body>
+</html>
