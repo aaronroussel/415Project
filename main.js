@@ -23,7 +23,7 @@ app.get("/", async (req, res) => {
   let cookie = req.cookies;
   let auth = await cookieAuth(cookie, client);
   if (auth) {
-    res.redirect("/chat");
+    res.redirect("/");
   } else {
     res.redirect("/login");
   }
@@ -46,7 +46,7 @@ app.get("/login", async (req, res) => {
   let cookie = req.cookies;
   let auth = await cookieAuth(cookie, client);
   if (auth) {
-    res.redirect("/");
+    res.redirect("/chat");
   } else {
     res.sendFile(path.join(__dirname, "/Pages/login.html"));
   }
@@ -54,6 +54,10 @@ app.get("/login", async (req, res) => {
 
 app.get("/registration-successful", (req, res) => {
   res.sendFile(path.join(__dirname, "/Pages/registration-successful.html"));
+});
+
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "/Pages/chat.html"));
 });
 
 app.get("/logout", (req, res) => {
