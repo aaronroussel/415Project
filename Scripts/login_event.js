@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "/create_account";
   });
 
+  createPostButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log("Button clicked");
+    window.location.href = "/newpost";
+  });
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     const formData = new FormData(form);

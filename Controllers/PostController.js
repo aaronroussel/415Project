@@ -7,10 +7,11 @@ class Post {
   subscribers = [];
   comments = [];
 
-  constructor(postContent, postTitle, postAuthor) {
-    this.postContent = postContent;
-    this.postTitle = postTitle;
-    this.postAuthor = postAuthor;
+    constructor(newPostData) {
+  //constructor(postContent, postTitle, postAuthor) {
+    this.postContent = newPostData.postContent;
+    this.postTitle = newPostData.postTitle;
+    this.postAuthor = newPostData.postAuthor;
   }
 
   attach(subscriber) {
