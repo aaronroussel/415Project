@@ -34,12 +34,13 @@ app.get("/create_account", (req, res) => {
 });
 
 app.get("/newpost", async (req, res) => {
-  const newPost = new Post("Test", "Test", req.cookies.id);
+  /*const newPost = new Post("Test", "Test", req.cookies.id);
   try {
     const created = await newPost.createPost(client);
   } catch (error) {
     console.log(error);
-  }
+  }*/
+  res.sendFile(path.join(__dirname, "/Pages/posttest.html"));
 });
 
 app.get("/login", async (req, res) => {
@@ -54,6 +55,10 @@ app.get("/login", async (req, res) => {
 
 app.get("/registration-successful", (req, res) => {
   res.sendFile(path.join(__dirname, "/Pages/registration-successful.html"));
+});
+
+app.get("/post-successful", (req, res) => {
+  res.sendFile(path.join(__dirname, "/Pages/post-successful.html"));
 });
 
 app.get("/chat", (req, res) => {
@@ -99,6 +104,22 @@ app.post("/login", async (req, res) => {
     res.send("Incorrect Login Information");
   }
 });
+
+app.post("/newpost", async (req, res) => {
+  console.log("Received create post request");
+  console.log("Form Data:", req.fields);
+  const newPostData = {
+    postTitle: req.fields.postTitle,
+    postContent: req.fields.postContent,
+    postAuthor: req.cookies.id,
+  };
+  const newPost = new Post(newPostData);
+  const postCreated = await newPost.createPost(client);
+  console.log("Redirecting client....");
+  res.redirect("/post-successful");
+}
+);
+  
 
 // ------------------ End of Routes ------------------
 //

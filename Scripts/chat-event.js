@@ -30,8 +30,15 @@ document.addEventListener("DOMContentLoaded", function () {
     var messageText = messageBox.value;
     socket.emit("chat message", messageText); // Send message to server
     messageBox.value = ""; // Clear the input box
+
+    //showMessageSentConfirmation();
+
     return false;
   });
+
+  //function showMessageSentConfirmation() {
+    //alert("Message Sent Successfully!");
+  //}
 
   messageBox.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
