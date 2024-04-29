@@ -81,6 +81,25 @@ class User {
     }
   }
 
+  static async fetchUsername(client, userId) {
+    try {
+      await client.connect();
+      const collection = client.db("arousmdb").collection("Accounts");
+      const account = collection.findOne({ _id: new ObjectId(userId) });
+      if (account) {
+        return account.username;
+      }
+    } catch (error) {
+      console.error("Error fetching account", error);
+    } finally {
+      await client.close();
+    }
+  }
+
+  static async fetchUserSubscriptions(client, userId) {
+    // fetch all posts that the user is subscribed to
+  }
+
   async updateAccount(client, account) {}
 
   notify(message) {

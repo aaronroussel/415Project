@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+    background-color: #e9ecef; /* Adding a background color */
+}
+
+#feed {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the cards in the feed */
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto; /* Centering the card */
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.content {
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.author {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.subscribe {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.comment-section {
+    margin-top: 15px;
+    background-color: #f6f8fa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.comment {
+    font-size: 14px;
+    color: #495057;
+    border-bottom: 1px solid #ced4da;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+/* Last comment shouldn't have a bottom border */
+.comment:last-child {
+    border-bottom: none;
+}
+
+.menu-bar {
+    background-color: #333; /* Dark background for the menu bar */
+    color: white;
+    padding: 10px 20px; /* Padding around the buttons */
+    text-align: center; /* Center-align the buttons */
+}
+
+.menu-bar button {
+    background-color: #444; /* Slightly lighter background for buttons */
+    border: none;
+    color: white;
+    padding: 10px 20px; /* Padding inside the buttons */
+    margin: 0 10px; /* Space between buttons */
+    cursor: pointer; /* Cursor indicates clickable items */
+    font-size: 16px;
+    border-radius: 5px; /* Rounded corners for buttons */
+}
+
+.menu-bar button:hover {
+    background-color: #555; /* Button hover effect */
+}
+
+.comment-input {
+    width: calc(100% - 20px); /* Subtract horizontal padding */
+    padding: 10px; /* Add padding for better text alignment and aesthetics */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    margin-bottom: 10px; /* Space below the textarea */
+    resize: vertical; /* Allows the user to resize the textarea vertically only */
+    border: 1px solid #ced4da; /* Adds a subtle border similar to Bootstrap's default styling */
+    border-radius: 4px; /* Slightly rounded borders for aesthetics */
+}
+
+.comment-form {
+    width: 100%; /* Ensure the form also spans the full width of the card */
+    padding: 0 10px; /* Match padding to keep alignment inside the card */
+    box-sizing: border-box; /* Include padding in the width calculation */
+}

@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+    background-color: #e9ecef;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.content {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.author {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.comment-section {
+    margin-top: 15px;
+    background-color: #f6f8fa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.comment {
+    font-size: 14px;
+    color:;
+}
+
+.subscribe {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
