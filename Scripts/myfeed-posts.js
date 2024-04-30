@@ -77,7 +77,7 @@ function displayPosts(posts) {
 // Retrieve the user ID from the cookie
 function getUserIdFromCookie() {
   const cookies = document.cookie.split("; ");
-  const userCookie = cookies.find((cookie) => cookie.startsWith("userId="));
+  const userCookie = cookies.find((cookie) => cookie.startsWith("id="));
   return userCookie ? userCookie.split("=")[1] : null;
 }
 
