@@ -1,29 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("accountForm");
   const modal = document.getElementById("accountModal");
-  const span = document.getElementsByClassName("close")[0];
   const createAccountButton = document.getElementById("create_account_button");
-  const createPostButton = document.getElementById("create_post_button");
 
+  // Move this outside and directly inside the DOMContentLoaded listener
   createAccountButton.addEventListener("click", function (event) {
     event.preventDefault();
-    console.log("Button clicked");
+    console.log("Create account button clicked");
     window.location.href = "/create_account";
-  });
-
-  createPostButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    console.log("Button clicked");
-    window.location.href = "/newpost";
   });
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     const formData = new FormData(form);
+    const username = formData.get("username"); // Ensure 'username' matches your form's input name attribute
+    const password = formData.get("password"); // Ensure 'password' matches your form's input name attribute
 
     fetch("/login", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json", // Indicating JSON data being sent
+      },
+      body: JSON.stringify({ username, password }), // Convert formData to JSON
     })
       .then((response) => {
         if (response.redirected) {
@@ -42,16 +40,4 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error:", error);
       });
   });
-
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-    modal.style.display = "none";
-  };
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
 });

@@ -11,12 +11,14 @@ const server = http.createServer(app);
 const User = require("./Controllers/UserController");
 const Post = require("./Controllers/PostController");
 const Comment = require("./Controllers/CommentController");
+const Notification = require("./Controllers/NotificationController");
 const cookieAuth = require("./Controllers/AuthController").cookieAuth;
 const cookie = require("cookie");
 
 // Static files
 app.use(express.json());
 app.use(express.static(__dirname));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use((req, res, next) => {
@@ -40,13 +42,13 @@ app.get("/create_account", (req, res) => {
 });
 
 app.get("/newpost", async (req, res) => {
-  /*const newPost = new Post("Test", "Test", req.cookies.id);
-  try {
-    const created = await newPost.createPost(client);
-  } catch (error) {
-    console.log(error);
-  }*/
-  res.sendFile(path.join(__dirname, "/Pages/posttest.html"));
+  let cookie = req.cookies;
+  let auth = await cookieAuth(cookie, client);
+  if (auth) {
+    res.sendFile(path.join(__dirname, "/Pages/posttest.html"));
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/login", async (req, res) => {
@@ -68,7 +70,13 @@ app.get("/post-successful", (req, res) => {
 });
 
 app.get("/home", async (req, res) => {
-  res.sendFile(path.join(__dirname, "/Pages/home.html"));
+  let cookie = req.cookies;
+  let auth = await cookieAuth(cookie, client);
+  if (auth) {
+    res.sendFile(path.join(__dirname, "/Pages/home.html"));
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/logout", (req, res) => {
@@ -82,24 +90,27 @@ app.get("/logout", (req, res) => {
 */
 
 app.get("/post/:postId", async (req, res) => {
-  try {
-    const postId = req.params.postId;
-    const post = await Post.fetchPost(client, postId); // Fetch your post based on postId
-    console.log(post);
-    comments = await Comment.getComments(client, postId); // Fetch comments based on postId
-    for (let comment of comments) {
-      post.comments.push(comment.commentContent);
-    }
+  let cookie = req.cookies;
+  let auth = await cookieAuth(cookie, client);
+  if (auth) {
+    try {
+      const postId = req.params.postId;
+      const post = await Post.fetchPost(client, postId); // Fetch your post based on postId
+      console.log(post);
+      comments = await Comment.getComments(client, postId); // Fetch comments based on postId
+      for (let comment of comments) {
+        post.comments.push(comment.commentContent);
+      }
 
-    // Convert MongoDB ObjectId to string
-    const formattedPost = {
-      ...post,
-      _id: post._id.toString(), // Convert ObjectId to string
-      postAuthor: post.postAuthor.toString(), // Assuming postAuthor is an ObjectId
-    };
+      // Convert MongoDB ObjectId to string
+      const formattedPost = {
+        ...post,
+        _id: post._id.toString(), // Convert ObjectId to string
+        postAuthor: post.postAuthor.toString(), // Assuming postAuthor is an ObjectId
+      };
 
-    // Serve HTML with embedded post data
-    const responseHtml = `
+      // Serve HTML with embedded post data
+      const responseHtml = `
       <!doctype html>
       <html lang="en">
           <head>
@@ -134,9 +145,12 @@ app.get("/post/:postId", async (req, res) => {
       </html>
 
         `;
-    res.send(responseHtml);
-  } catch (error) {
-    res.status(500).send("Error fetching post data");
+      res.send(responseHtml);
+    } catch (error) {
+      res.status(500).send("Error fetching post data");
+    }
+  } else {
+    res.redirect("/login");
   }
 });
 
@@ -149,10 +163,16 @@ app.post("/addComment", async (req, res) => {
     postId,
     comment,
   );
+  await Post.notifySubscribers(client, postId);
+  res.send(newComment);
 });
 
 app.get("/showcookies", (req, res) => {
   res.send(req.cookies);
+});
+
+app.get("/notifications", async (req, res) => {
+  res.sendFile(path.join(__dirname, "/Pages/notifications.html"));
 });
 
 app.get("/myfeed", async (req, res) => {
@@ -210,21 +230,50 @@ app.post("/unsubscribeToPost", async (req, res) => {
   }
 });
 
+app.post("/getNotifications", async (req, res) => {
+  const userId = req.cookies.id; // Ensure cookies are correctly parsed
+  try {
+    const notifications = await Notification.getNotifications(client, userId);
+    console.log("notifications: ", notifications);
+    res.send(notifications);
+  } catch (error) {
+    console.error("Failed to fetch notifications:", error);
+    res.status(500).send("Error fetching notifications");
+  }
+});
+
 app.post("/login", async (req, res) => {
   let userData = {
-    username: req.fields.userName,
-    password: req.fields.password,
+    username: req.body.username, // changed from userName to username
+    password: req.body.password,
     id: null,
   };
+  console.log(userData);
   const user = new User(userData);
   const login = await user.login(client);
   if (login) {
-    // Ensure the user.id is correctly retrieved and is not null
     console.log("Setting user ID cookie:", user.id);
     res.cookie("id", user.id, { httpOnly: false, path: "/", sameSite: "lax" });
     res.redirect("/home");
   } else {
     res.send("Incorrect Login Information");
+  }
+});
+
+app.post("/create_account", async (req, res) => {
+  console.log("Received Post Request");
+  console.log("Form Data:", req.body); // Changed from req.fields to req.body
+  const newUserData = {
+    username: req.body.username, // Note: Ensure the field names match the form input names
+    password: req.body.password,
+  };
+  const newUser = new User(newUserData);
+  const created = await newUser.createAccount(client);
+  if (!created) {
+    res.send("Account already exists");
+  } else {
+    console.log("Redirecting client....");
+    res.redirect("/registration-successful");
   }
 });
 
@@ -276,6 +325,14 @@ app.post("/getSubscribedPosts", async (req, res) => {
 
   try {
     const posts = await Post.fetchSubscribedPosts(client, userId);
+    for (let post of posts) {
+      console.log("fetching comments");
+      comments = await Comment.getComments(client, post._id);
+      for (let comment of comments) {
+        post.comments.push(comment.commentContent);
+        console.log(comment.commentContent);
+      }
+    }
     res.json(posts);
   } catch (error) {
     res.status(500).json({ error: true, message: "Error fetching posts" });

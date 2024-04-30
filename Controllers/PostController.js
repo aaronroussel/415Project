@@ -1,4 +1,5 @@
 const ObjectId = require("mongodb").ObjectId;
+const Notification = require("./NotificationController");
 
 class Post {
   postId;
@@ -97,8 +98,22 @@ class Post {
       return posts;
     } catch (error) {
       console.error("Error fetching subscribed posts", error);
-    } finally {
-      client.close();
+    }
+  }
+
+  static async notifySubscribers(client, postId) {
+    try {
+      await client.connect();
+      const collection = client.db("arousmdb").collection("Posts");
+      const post = await collection.findOne({ _id: new ObjectId(postId) });
+      const message = `New comment on post: ${post.postTitle}`;
+      post.subscribers.forEach((subscriber) => {
+        console.log(`Notifying ${subscriber} about new post`);
+        let notification = new Notification(subscriber, message);
+        notification.createNotification(client);
+      });
+    } catch (error) {
+      console.error("Error notifying subscribers", error);
     }
   }
 
