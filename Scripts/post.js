@@ -56,7 +56,7 @@ function submitComment(event) {
   const form = event.target;
   const commentInput = form.elements["comment"];
   const comment = commentInput.value;
-  const postId = initialPostData._id; // Make sure this is correctly defined in the scope
+  const postId = initialPostData._id; // Ensure this variable is correctly initialized
 
   fetch("/addComment", {
     method: "POST",
@@ -69,14 +69,17 @@ function submitComment(event) {
     .then((data) => {
       if (data.success) {
         console.log("Comment added:", data.message);
-        // Dynamically append the new comment
-        appendComment(comment);
-        commentInput.value = ""; // Clear the input field
+        // Refresh the page to show the new comment
+        window.location.reload();
       } else {
         console.error("Failed to add comment:", data.message);
+        // Optionally show an error message to the user
       }
     })
-    .catch((error) => console.error("Error adding comment:", error));
+    .catch((error) => {
+      console.error("Error adding comment:", error);
+      // Optionally show an error message to the user
+    });
 }
 
 function appendComment(comment) {

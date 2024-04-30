@@ -164,7 +164,7 @@ app.post("/addComment", async (req, res) => {
     comment,
   );
   await Post.notifySubscribers(client, postId);
-  res.send(newComment);
+  res.json({ success: true, message: "Comment added successfully" });
 });
 
 app.get("/showcookies", (req, res) => {
